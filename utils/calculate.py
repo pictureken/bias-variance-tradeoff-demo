@@ -1,5 +1,6 @@
 import contextlib
 import os
+from typing import List
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -50,7 +51,7 @@ class Simulator:
         self.y_pred = self.model.predict(reshaped_x_test)
 
     # 二乗誤差と偏りと分散を算出（bias-variance tradeoff）
-    def bias_variance_tradeoff(self, y_list: list[np.ndarray]):
+    def bias_variance_tradeoff(self, y_list: List[np.ndarray]):
         y_list = np.asarray(y_list)
         reshaped_y_true = self.y_true.reshape(-1, 1)
         mse = ((reshaped_y_true - y_list) ** 2).mean()

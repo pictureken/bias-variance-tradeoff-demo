@@ -1,3 +1,5 @@
+from typing import List
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -5,7 +7,7 @@ import utils
 
 
 def main(
-    hidden_size_list: list[int],
+    hidden_size_list: List[int],
     toy_sample_size: int,
     std: float,
     test_sample_size: int,
@@ -47,6 +49,7 @@ if __name__ == "__main__":
     TEST_SAMPLE_SIZE = 50
     TRIAL = 100
     hidden_size_list = [5, 10, 15, 17, 20, 22, 25, 35, 75, 100, 1000, 10000]
+    hidden_size_list = [35]
     main(
         hidden_size_list=hidden_size_list,
         toy_sample_size=TOY_SAMPLE_SIZE,

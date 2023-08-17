@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from torch import nn
+from tqdm import tqdm
 
 from . import calculate
 
@@ -59,7 +60,7 @@ def task(
     std: float = 1.0,
     test_sample_size: int = 50,
     trial: int = 100,
-    iteration: int = 5000,
+    iteration: int = 1000,
     hidden_size: int = 35,
 ):
     y_pred_list = []
@@ -67,11 +68,11 @@ def task(
     simulator = NeuralNetSimulator(is_fix=is_fix)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = NeuralNet(in_features=2, hidden_size=hidden_size, out_features=1).to(device)
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+    optimizer = torch.optim.RMSprop(model.parameters(), lr=0.01, momentum=0.9)
     criterion = nn.MSELoss()
     plt.figure(figsize=(20, 5))
     plt.subplot(1, 2, 1)
-    for i in range(trial):
+    for i in tqdm(range(trial)):
         # 学習データを生成
         simulator.create_toy_data(toy_sample_size=toy_sample_size, std=std)
         # 評価用データを生成
