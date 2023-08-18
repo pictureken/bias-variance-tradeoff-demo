@@ -15,18 +15,16 @@ class Simulator:
     # 学習データの生成
     def create_toy_data(self, toy_sample_size: int, std: float):
         if self.is_fix:
-            # 学習データの生成時のみseedを固定することでxを固定（fix design）
+            # 学習データの生成時のみseedを固定することでxを固定（fixed design）
             with self._temporary_seed(2023):
                 self.x = np.random.uniform(low=0, high=1, size=toy_sample_size)
 
         else:
             # 一様分布からxを生成（random design）
             self.x = np.random.uniform(low=0, high=1, size=toy_sample_size)
-
         np.random.shuffle(self.x)
         # 正規分布からノイズを生成
         self.epsilon = np.random.normal(scale=std, size=self.x.shape)
-
         # y=f(x)+ε
         self.y = self.func(self.x) + self.epsilon
 

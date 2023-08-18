@@ -1,1 +1,1 @@
-from . import calculate, calculate_nn
+from . import model, simulator
