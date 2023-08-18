@@ -13,25 +13,26 @@ from . import calculate
 class NeuralNet(nn.Module):
     def __init__(self, in_features, hidden_size, out_features):
         super(NeuralNet, self).__init__()
-        self.fc1 = nn.Linear(in_features, hidden_size)
         self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(hidden_size, out_features)
+        self.fc1 = nn.Linear(in_features, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, hidden_size // 2)
+        self.fc3 = nn.Linear(hidden_size // 2, out_features)
 
     def forward(self, x):
-        out = self.fc1(x)
-        out = self.relu(out)
-        out = self.fc2(out)
+        out = self.relu(self.fc1(x))
+        out = self.relu(self.fc2(out))
+        out = self.fc3(out)
         return out
 
 
 class NeuralNetSimulator(calculate.Simulator):
-    def train(self, model, optimizer, criterion, iteration, device):
+    def train(self, model, optimizer, criterion, epoch, device):
         self.model = model
         self.device = device
         tensor_x = torch.from_numpy(self.x.astype(np.float32)).float()
         tensor_x = torch.stack([torch.ones(tensor_x.shape), tensor_x], 1)
         tensor_y = torch.from_numpy(self.y.astype(np.float32)).float()
-        for i in range(iteration):
+        for i in range(epoch):
             optimizer.zero_grad()
             y_pred = self.model(tensor_x.to(self.device))
             loss = criterion(y_pred.reshape(tensor_y.shape), tensor_y.to(self.device))
