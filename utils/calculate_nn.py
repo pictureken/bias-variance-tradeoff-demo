@@ -27,7 +27,6 @@ class NeuralNet(nn.Module):
 class NeuralNetSimulator(calculate.Simulator):
     def train(self, model, optimizer, criterion, iteration, device):
         self.model = model
-        self.model.train()
         self.device = device
         tensor_x = torch.from_numpy(self.x.astype(np.float32)).float()
         tensor_x = torch.stack([torch.ones(tensor_x.shape), tensor_x], 1)
@@ -40,7 +39,6 @@ class NeuralNetSimulator(calculate.Simulator):
             optimizer.step()
 
     def test(self):
-        self.model.eval()
         tensor_x = torch.from_numpy(self.x_test.astype(np.float32)).float()
         tensor_x = torch.stack([torch.ones(tensor_x.shape), tensor_x], 1)
         with torch.no_grad():
