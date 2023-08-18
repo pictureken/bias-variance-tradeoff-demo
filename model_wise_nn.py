@@ -49,7 +49,6 @@ if __name__ == "__main__":
     TEST_SAMPLE_SIZE = 50
     TRIAL = 100
     hidden_size_list = [5, 10, 15, 17, 20, 22, 25, 35, 75, 100, 1000, 10000]
-    hidden_size_list = [35]
     main(
         hidden_size_list=hidden_size_list,
         toy_sample_size=TOY_SAMPLE_SIZE,

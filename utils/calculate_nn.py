@@ -38,7 +38,6 @@ class NeuralNetSimulator(calculate.Simulator):
             loss = criterion(y_pred.reshape(tensor_y.shape), tensor_y.to(self.device))
             loss.backward()
             optimizer.step()
-            print(f"epoch={i},loss={loss}")
 
     def test(self):
         self.model.eval()
@@ -60,7 +59,7 @@ def task(
     std: float = 1.0,
     test_sample_size: int = 50,
     trial: int = 100,
-    iteration: int = 1000,
+    epoch: int = 1000,
     hidden_size: int = 35,
 ):
     y_pred_list = []
@@ -68,7 +67,7 @@ def task(
     simulator = NeuralNetSimulator(is_fix=is_fix)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = NeuralNet(in_features=2, hidden_size=hidden_size, out_features=1).to(device)
-    optimizer = torch.optim.RMSprop(model.parameters(), lr=0.01, momentum=0.9)
+    optimizer = torch.optim.RMSprop(model.parameters(), lr=0.01)
     criterion = nn.MSELoss()
     plt.figure(figsize=(20, 5))
     plt.subplot(1, 2, 1)
@@ -78,7 +77,7 @@ def task(
         # 評価用データを生成
         simulator.create_test_data(test_sample_size=test_sample_size)
         # モデルの学習
-        simulator.train(model, optimizer, criterion, iteration, device)
+        simulator.train(model, optimizer, criterion, epoch, device)
         # 評価
         simulator.test()
         y_pred_list.append(simulator.y_pred)
