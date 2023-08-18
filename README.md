@@ -12,12 +12,18 @@ $ model_wise_nn.py
 ```
 
 ### 出力ファイル
-outputsファイルに実行結果が格納されます．ディレクトリ構造は以下のようになります．model_wise.pyはlinear-reg，model_wise_nn.pyはnnに出力されます．
+outputsファイルに実行結果が格納されます．ディレクトリ構造は以下のようになります．model_wise.pyはlinear-reg，model_wise_nn.pyはnnに出力されます．また，Fixed Designの場合はTrueフォルダ，Random Designの場合はFalseフォルダに実行結果が格納されます．
 ```
 .
 └── outputs
     ├── linear-reg
-        └──出力結果
+    │    ├──True
+    │    │   └──実行結果
+    │    └──False
+    │        └──実行結果
     └── nn
-        └──出力結果
+         ├──True
+         │   └──実行結果
+         └──False
+             └──実行結果
 ```
